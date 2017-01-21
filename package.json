@@ -1,0 +1,16 @@
+
+{
+  "name": "surveys_app",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+  	"express": "4.9.5",
+  	"request": "2.67.0",
+    "lodash": "2.4.1",
+    "mysql2": "1.1.2",
+    "async": "0.9.0"
+  },
+  "scripts": {
+  	"start": "node server.js"
+  }
+}
