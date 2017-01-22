@@ -5,6 +5,7 @@ exports.requestHandler = function requestHandler (req, res, next) {
 	res.setHeader('Content-Type', 'application/json')
 	res.setHeader('Access-Control-Allow-Origin', '*')
 	req.context = {}
+	req.requestedResources = {}
 	return next()
 }
 

@@ -47,7 +47,7 @@ authorizedAdminRoutes.post(
 
 authorizedAdminRoutes.put(
 	'/organizations/:organization_id/surveys/survey_id', 
-	organizationSurveys.delete
+	organizationSurveys.put
 )
 
 authorizedAdminRoutes.delete(
@@ -73,7 +73,7 @@ authorizedAdminRoutes.post(
 )
 
 authorizedAdminRoutes.put(
-	'/organizations/:organization_id/users/user_id', 
+	'/organizations/:organization_id/users/user_id',
 	organizationUsers.put
 )
 
@@ -84,16 +84,6 @@ authorizedAdminRoutes.delete(
 
 ///////////
 
-
-authorizedRoutes.get(
-	'/users/:user_id/permissions/permission_id/surveys', 
-	surveys.findForUserByPermission
-)
-
-authorizedRoutes.get(
-	'/users/:user_id/surveys', 
-	surveys.findAllForUser
-)
 
 module.exports = {
 	public: publicRoutes,

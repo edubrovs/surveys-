@@ -1,10 +1,10 @@
 'use strict'
 const errors    = require('./errors')
-const lodash    = require('lodash')
 const mysql     = require('./databases/mysql')
-const validator = require('./lib/validator')
-const userSurveys = require('./user_surveys')
+const Model     = require('./orm/model').Model
+const Instance  = require('./orm/instance')
 
+/*
 const permissions = userSurveys.permissions
 
 const roles = {
@@ -31,14 +31,19 @@ const roles = {
 }
 exports.roles = roles
 
-function findByToken (token, callback) {
-	return mysql.getConnection.guery(`SELECT * from ${User.prototype.table} WHERE `token` = ? LIMIT 1`, [token], (err, results) {
+*/
+
+User = new Model('user', attributes)
+module.exports = User
+
+User.prototype.findByToken (token, callback) {
+	return mysql.getConnection.guery(`SELECT * from ${this.table} WHERE `token` = ? LIMIT 1`, [token], (err, results) {
 		if (err) return callback(errors.db())
 
 		if (results.length === 0) return callback(errors.notFound())
 
 		try {
-			const user = new User(results[0])
+			const user = Instance.build(this, results[0])
 		} catch (err) {
 			return callback(err)
 		}
@@ -46,23 +51,12 @@ function findByToken (token, callback) {
 		return callback(null, user)
 	})
 }
-exports.findByToken = findByToken
 
-function User (options) {
-	_.assign(this, validator.validateAndCreate(User, options))
-}
-exports.User = User
-
-User.prototype.table = 'user'
-
-User.prototype.isPriveleged = function () {
-	return 
-}
-
-User.prototype.attributes = {
+const attributes = {
 	id: {
 		type: 'string',
-		required: true
+		required: true,
+		creation: true
 	},
 	organization_id: {
 		type: 'string',
@@ -70,11 +64,13 @@ User.prototype.attributes = {
 	},
 	role_id : {
 		type: 'integer',
-		required: true
+		required: true,
+		updatable: true,
 	},
 	name: {
 		type: 'string',
-		required: true
+		required: true,
+		updatable: true,
 	},
 	token: {
 		type: 'string',
@@ -82,7 +78,8 @@ User.prototype.attributes = {
 	},
 	email: {
 		type: 'string',
-		required: true
+		required: true,
+		updatable: true
 	},
 	created_at: {
 		type: 'date',
